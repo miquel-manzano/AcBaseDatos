@@ -1,0 +1,32 @@
+
+{
+     "address" : {
+        "building" : "3850",
+        "street" : "Richmond Avenue",
+        "zipcode" : "10312"
+    },
+    "borough" : "Staten Island",                                                                                                  
+    "cuisine" : "Pizza",
+    "name" : "David Vaquer - El pizzero espagnol",
+    "restaurant_id" : "9999999559"
+}
+        
+
+-------------------------------------------------
+
+
+{
+      "address" : {
+        "building" : "24",
+        "coord" : [
+            -73.9812198,
+            40.7509706
+        ],
+        "street" : "East   39 Street",
+        "zipcode" : "10016"
+    },
+    "borough" : "Manhattan",
+    "cuisine" : "American ",
+      "name" : "Joan_Gomez's Hamburgers ",
+    "restaurant_id" : "99999996691"
+}

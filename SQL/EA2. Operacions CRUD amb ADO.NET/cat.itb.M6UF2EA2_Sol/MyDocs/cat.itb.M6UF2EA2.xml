@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>cat.itb.M6UF2EA2</name>
+    </assembly>
+    <members>
+        <member name="T:cat.itb.M6UF2EA2.connections.CloudConnection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.connections.CloudConnection.GetConnection">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.cruds.ClientCRUD">
+            <summary>
+            Classe per gestionar la taula client
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ClientCRUD.Select(System.Int32)">
+            <summary>
+            Mètode que retorna el client que passes el codi per paràmetre
+            </summary>
+            <param name="codi">Codi del Client</param>
+            <returns>Un objecte client</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ClientCRUD.UpdateClientLimitCredit(System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{System.Double})">
+            <summary>
+            Mètode que actualitza els clients especificats
+            </summary>
+            <param name="codis">Llista de ints que representen els codis de client</param>
+            <param name="limits">Llista de doubles que representen els límits de credits</param>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ClientCRUD.Delete(System.Int32)">
+            <summary>
+            Mètode que elimina el client que passem el id per paràmetre
+            </summary>
+            <param name="codi">Codi del Client</param>
+            <returns>True si s'ha eliminat i false si no es pot eliminar</returns>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.cruds.EmpleatCRUD">
+            <summary>
+            Classe per gestionar la taula emp
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.EmpleatCRUD.Select(System.Int32)">
+            <summary>
+            Mètode que retorna l'Empleat que passes el codi per paràmetre
+            </summary>
+            <returns>Un objecte Empleat</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.EmpleatCRUD.Insert(cat.itb.M6UF2EA2.model.Empleat)">
+            <summary>
+            Mètode que inserta un Empleat
+            </summary>
+            <param name="emp">Objecte Empleat</param>
+            <returns>True si s'ha eliminat i false si no es pot eliminar</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.EmpleatCRUD.SelectAll">
+             <summary>
+             Mètode que retorna tots els empleats de la taula
+             </summary>
+            <returns>Una llista d'empleats</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.EmpleatCRUD.Delete(System.Int32)">
+            <summary>
+            Mètode que elimina l'Empleat que passem el id per paràmetre
+            </summary>
+            <param name="id">Identificador de l'Empleat</param>
+            <returns>True si s'ha eliminat i false si no es pot eliminar</returns>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.cruds.GeneralCRUD">
+            <summary>
+            Classe on s'administra l'estructura de la database
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.GeneralCRUD.DropTables(System.Collections.Generic.List{System.String})">
+            <summary>
+            Mètode per esborrar les taules
+            </summary>
+            <param name="tables">Llista de strings amb el nom de les taules</param>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.GeneralCRUD.RunScriptEmpresa">
+            <summary>
+            Mètode per executar el script empresa.sql
+            </summary>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.cruds.ProducteCRUD">
+            <summary>
+            Classe per gestionar la taula producte
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ProducteCRUD.Select(System.Int32)">
+            <summary>
+            Mètode que retorna el producte que passes el id per paràmetre
+            </summary>
+            <returns>Un objecte Producte</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ProducteCRUD.InsertIntoProducteWithPreparedStatement(System.Collections.Generic.List{cat.itb.M6UF2EA2.model.Producte})">
+            <summary>
+            Mètode que inserta els productes especificats amb prepared statement
+            </summary>
+            <param name="productes">Llista d'objectes de tipus Producte</param>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.cruds.ProducteCRUD.Delete(System.Int32)">
+            <summary>
+            Mètode que elimina el prducte que passem el id per paràmetre
+            </summary>
+            <param name="id">Identificador del producte</param>
+            <returns>True si s'ha eliminat i false si no es pot eliminar</returns>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.model.Client">
+            <summary>
+            Classe on s'administra l'objecte de tipus client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.clientCod">
+            <summary>
+            Int amb l'id del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.nom">
+            <summary>
+            String amb el nom del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.adreca">
+            <summary>
+            String amb l'adreça del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.ciutat">
+            <summary>
+            String amb el nom de la ciutat del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.estat">
+            <summary>
+            String amb el nom de l'estat del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.codiPostal">
+            <summary>
+            String amb el codi postal de la població on resideix el client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.Area">
+            <summary>
+            Int amb l'area del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.telefon">
+            <summary>
+            String amb el número de telèfon del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.reprCod">
+            <summary>
+            Int amb el codi del treballador que li pertoca
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.limitCredit">
+            <summary>
+            Double amb el limit de crèdit del client
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Client.observacions">
+            <summary>
+            String amb les observacions del client
+            </summary>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.model.Empleat">
+            <summary>
+            Clase on s'administren els objectes Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.empNo">
+            <summary>
+            Int amb l'id de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.cognom">
+            <summary>
+            String amb el cognom de l'Empleat 
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.ofici">
+            <summary>
+            String amb l'ofici de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.cap">
+            <summary>
+            Int amb l'id del cap de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.dataAlta">
+            <summary>
+            DateTime amb la data d'alta de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.salari">
+            <summary>
+            Int amb el salari de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.comissio">
+            <summary>
+            Int amb la comissió de l'Empleat
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Empleat.deptNo">
+            <summary>
+            Int amb el número de departament de l'Empleat
+            </summary>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.model.Producte">
+            <summary>
+            Classe on s'administra l'objecte de tipus producte
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Producte.prodNum">
+            <summary>
+            Int amb l'id del producte
+            </summary>
+        </member>
+        <member name="P:cat.itb.M6UF2EA2.model.Producte.descripcio">
+            <summary>
+            String amb la descripció del producte
+            </summary>
+        </member>
+        <member name="T:cat.itb.M6UF2EA2.Program">
+            <summary>
+            Classe on el programa comença
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.Main">
+            <summary>
+            Mètode on el programa comença
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.Start">
+            <summary>
+            Mètode amb el loop inicial del programa
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.PrintMenu">
+            <summary>
+            Mètode que printa el menú
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.ChooseOption">
+            <summary>
+            Mètode a travès del qual l'usuari escull l'opció que vol dur a terme
+            </summary>
+            <returns>Bool que decideix si el programa acabarà</returns>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.PressKeyToMenu">
+            <summary>
+            Mètode per mostrar que s'ha de fer per tornar al menú
+            </summary>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.PrintExercise(System.Int32)">
+            <summary>
+            Mètode que printa el número d'exercici que s'està realitzant
+            </summary>
+            <param name="exerciseNumber">Int amb el número de l'exercici</param>
+        </member>
+        <member name="M:cat.itb.M6UF2EA2.Program.GetTablesToDrop">
+            <summary>
+            Mètode que retorna les taules que s'han d'esborrar
+            </summary>
+            <returns>Lista amb els strings amb el nom de les taules</returns>
+        </member>
+    </members>
+</doc>
