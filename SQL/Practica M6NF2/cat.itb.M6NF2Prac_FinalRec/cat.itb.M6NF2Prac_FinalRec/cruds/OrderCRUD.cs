@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using cat.itb.M6NF2Prac.models;
+using NHibernate;
 using UF2_test.connections;
+using static System.Collections.Specialized.BitVector32;
+
 
 namespace cat.itb.M6NF2Prac_FinalRec.cruds
 {
@@ -19,6 +22,15 @@ namespace cat.itb.M6NF2Prac_FinalRec.cruds
                 session.Close();
             }
             return orders;
+        }
+
+        public IList<Order> SelectAllHQL()
+        {
+            var session = SessionFactoryHR2Cloud.Open();
+            IQuery query = session.CreateQuery("select c from Order c");
+            IList<Order> ords = query.List<Order>();
+            session.Close();
+            return ords;
         }
 
         public Order SelectById(int id)
@@ -92,6 +104,17 @@ namespace cat.itb.M6NF2Prac_FinalRec.cruds
             session.Close();
 
             return orders;
+        }
+
+        public Order SelectLowAmount()
+        {
+            var sessions = SessionFactoryHR2Cloud.Open();
+            NHibernate.Criterion.QueryOver<Order> maxCost = NHibernate.Criterion.QueryOver.Of<Order>()
+                .SelectList(p => p.SelectMax(c => c.Cost));
+            Order order = sessions.QueryOver<Order>()
+                .WithSubquery.WhereProperty(c => c.Cost)
+                .Eq(maxCost).SingleOrDefault();
+            return order;
         }
     }
 }

@@ -127,6 +127,20 @@ namespace cat.itb.M6NF2Prac_FinalRec.cruds
         }
 
 
+        public IList<object[]> SelectByCreditLowerThan(decimal credit)
+        {
+            var session = SessionFactoryHR2Cloud.Open();
+            IList<object[]> dadesEmps = session.QueryOver<Client>()
+                .Where(c => c.Credit < credit)
+                .SelectList(list => list
+                    .Select(c => c.Code)
+                    .Select(c => c.Name)
+                    .Select(c => c.Credit))
+                .List<object[]>();
+            session.Close();
+            return dadesEmps;
+        }
+
         // ADO
         public void InsertADO(List<Client> clies)
         {

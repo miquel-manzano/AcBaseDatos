@@ -133,5 +133,35 @@ namespace cat.itb.M6NF2Prac_FinalRec.cruds
 
             conn.Close();
         }
+
+        public Salesperson SelectBySurenameADO(string surename)
+        {
+            StoreCloudConnection db = new StoreCloudConnection();
+            var conn = db.GetConnection();
+
+            var cmd = new NpgsqlCommand("SELECT * FROM salesperson WHERE surname = @salespersonSurname", conn);
+            cmd.Parameters.AddWithValue("salespersonSurname", surename);
+            cmd.Prepare();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            Salesperson salesperson = new Salesperson();
+
+            if (dr.Read())
+            {
+                salesperson.Id = dr.GetInt32(0);
+                salesperson.Surname = dr.GetString(1);
+                salesperson.Job = dr.GetString(2);
+                salesperson.StartDate = dr.GetDateTime(3);
+                salesperson.Salary = dr.GetDecimal(4);
+                salesperson.Commission = dr.IsDBNull(5) ? (decimal?)null : dr.GetDecimal(5);
+                salesperson.Department = dr.GetString(6);
+            }
+            else
+            {
+                salesperson = null;
+            }
+
+            conn.Close();
+            return salesperson;
+        }
     }
 }

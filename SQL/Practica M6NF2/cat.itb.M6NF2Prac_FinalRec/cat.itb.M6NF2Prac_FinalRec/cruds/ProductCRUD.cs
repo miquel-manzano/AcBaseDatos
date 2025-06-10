@@ -157,5 +157,108 @@ namespace cat.itb.M6NF2Prac_FinalRec.cruds
 
             conn.Close();
         }
+
+        public List<Product> SelectByHighPriceADO(decimal price)
+        {
+            StoreCloudConnection db = new StoreCloudConnection();
+            var conn = db.GetConnection();
+
+            var cmd = new NpgsqlCommand($"SELECT * FROM product WHERE price > {price}", conn);
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+
+            List<Product> provs = new List<Product>();
+
+            while (dr.Read())
+            {
+                var productCRUD = new ProductCRUD();
+
+                Product prod = new Product();
+                var salespersonCRUD = new SalespersonCRUD();
+
+                prod.Id = dr.GetInt32(0);
+                prod.Code = dr.GetInt32(1);
+                prod.Description = dr.GetString(2);
+                prod.CurrentStock = dr.GetInt32(3);
+                prod.MinStock = dr.GetInt32(4);
+                prod.Price = dr.GetDecimal(5);
+                prod.Salesperson = salespersonCRUD.SelectById(dr.GetInt32(6));
+
+                provs.Add(prod);
+            }
+
+            conn.Close();
+            return provs;
+        }
+
+        public void InsertADO(Product prod)
+        {
+            StoreCloudConnection db = new StoreCloudConnection();
+            var conn = db.GetConnection();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO product (code, description, currentstock, minstock, price, salesp) VALUES (@code, @description, @currentstock, @minstock, @price, @salesp)", conn);
+
+            
+            cmd.Parameters.AddWithValue("code", prod.Code);
+            cmd.Parameters.AddWithValue("description", prod.Description);
+            cmd.Parameters.AddWithValue("currentstock", prod.CurrentStock);
+            cmd.Parameters.AddWithValue("minstock", prod.MinStock);
+            cmd.Parameters.AddWithValue("price", prod.Price);
+            cmd.Parameters.AddWithValue("salesp", prod.Salesperson.Id);
+
+            cmd.Prepare();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine($"Product with code {prod.Code} added");
+            }
+            catch
+            {
+                Console.WriteLine($"Couldn't add Product with code {prod.Code}");
+            }
+
+            cmd.Parameters.Clear();
+            
+
+            conn.Close();
+        }
+
+        public List<Product> SelectBySalesSurnameADO(string surname)
+        {
+            StoreCloudConnection db = new StoreCloudConnection();
+            var conn = db.GetConnection();
+
+            var salesCRUD = new SalespersonCRUD();
+            var salesperson = salesCRUD.SelectBySurenameADO(surname);
+
+            var cmd = new NpgsqlCommand("SELECT * FROM product WHERE salesp = @salesId", conn);
+            cmd.Parameters.AddWithValue("salesId", salesperson.Id);
+            cmd.Prepare();
+            NpgsqlDataReader dr = cmd.ExecuteReader();
+            
+            List<Product> prods = new List<Product>();
+
+
+            while (dr.Read())
+            {
+                var salespersonCRUD = new SalespersonCRUD();
+                
+                Product prod = new Product();
+                prod.Id = dr.GetInt32(0);
+                prod.Code = dr.GetInt32(1);
+                prod.Description = dr.GetString(2);
+                prod.CurrentStock = dr.GetInt32(3);
+                prod.MinStock = dr.GetInt32(4);
+                prod.Price = dr.GetDecimal(5);
+                prod.Salesperson = salespersonCRUD.SelectById(dr.GetInt32(6));
+
+                prods.Add(prod);
+            }
+            
+
+            conn.Close();
+            return prods;
+        }
     }
 }

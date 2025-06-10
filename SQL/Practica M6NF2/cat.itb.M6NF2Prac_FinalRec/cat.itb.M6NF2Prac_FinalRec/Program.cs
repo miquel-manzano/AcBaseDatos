@@ -5,12 +5,14 @@ using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 using cat.itb.M6NF2Prac.models;
 using cat.itb.M6NF2Prac_FinalRec.cruds;
+using FluentNHibernate.Conventions;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("\n[1] Exercici 1" +
+        Console.WriteLine("\n--- EXERCICIS DE LA PRACTICA ---" +
+                               "\n[1] Exercici 1" +
                                "\n[2] Exercici 2" +
                                "\n[3] Exercici 3" +
                                "\n[4] Exercici 4" +
@@ -24,8 +26,17 @@ internal class Program
                                "\n[12] Exercici 12" +
                                "\n[13] Exercici 13" +
                                "\n[14] Exercici 14" +
-                               "\n[15] Drop tables" +
-                               "\n[16] Run script" +
+                               "\n--- EXERCICIS DEL EXAMEN ---" +
+                               "\n[15] Exercici 1" +
+                               "\n[16] Exercici 2" +
+                               "\n[17] Exercici 3" +
+                               "\n[18] Exercici 4" +
+                               "\n[19] Exercici 5" +
+                               "\n[20] Exercici 6" +
+                               "\n[21] Exercici 8" +
+
+                               "\n[50] Drop tables" +
+                               "\n[60] Run script" +
                                "\n[0] Exit");
 
         int option = int.Parse(Console.ReadLine());
@@ -79,6 +90,27 @@ internal class Program
                 Ex14();
                 break;
             case 15:
+                ExamEx1();
+                break;
+            case 16:
+                ExamEx2();
+                break;
+            case 17:
+                ExamEx3();
+                break;
+            case 18:
+                ExamEx4();
+                break;
+            case 19:
+                ExamEx5();
+                break;
+            case 20:
+                ExamEx6();
+                break;
+            case 21:
+                ExamEx8();
+                break;
+            case 50:
                 var tables = new List<string>
                 {
                     "client",
@@ -90,7 +122,7 @@ internal class Program
 
                 generalCRUD.DropTables(tables);
                 break;
-            case 16:
+            case 60:
                 generalCRUD.RunScriptStore();
                 break;
         }
@@ -398,6 +430,110 @@ internal class Program
         foreach (var clie in clies)
         {
             Console.WriteLine($"Nom: {clie.Name}, Credit: {clie.Credit}");
+        }
+    }
+
+    public static void ExamEx1()
+    {
+        Console.WriteLine("\n--- Ex1 ---\n");
+
+        var pCRUD = new ProviderCRUD();
+        var provs = pCRUD.SelectByCityADO("BELMONT");
+
+        foreach (var prov in provs)
+        {
+            prov.Amount = 550;
+            prov.Credit = 30000;
+            pCRUD.UpdateADO(prov);
+        }
+    }
+
+    public static void ExamEx2()
+    {
+        Console.WriteLine("\n--- Ex2 ---\n");
+
+        var pCRUD = new ProductCRUD();
+        var filtredProducts = pCRUD.SelectByHighPriceADO(250);
+
+        foreach (var pro in filtredProducts)
+        {
+            Console.WriteLine($"Id: {pro.Id}, Code: {pro.Code}, Des: {pro.Description}, CurrentStock: {pro.CurrentStock}, MinStock: {pro.MinStock}, Price: {pro.Price}, Salesp: {pro.Salesperson}");
+        }
+    }
+
+    public static void ExamEx3()
+    {
+        var sCRUD = new SalespersonCRUD();
+        
+        var MyProcuct = new Product
+        {
+            Code = 999999,
+            Description = "Nintendo Switch 2",
+            CurrentStock = 2,
+            MinStock = 1,
+            Price = 500,
+            Salesperson = sCRUD.SelectBySurenameADO("REYES")
+        };
+
+        var pCRUD = new ProductCRUD();
+        pCRUD.InsertADO(MyProcuct);
+
+        var MyProvider = new Provider
+        {
+            Name = "Paco",
+            Address = "Mi casa",
+            City = "Barcelona",
+            StateCode = "ES",
+            ZipCode = "08016",
+            Area = 222,
+            Phone = "644613331",
+            Product = pCRUD.SelectByCodeADO(999999),
+            Amount = 2,
+            Credit = 50000,
+            Remark = "Nothing"
+        };
+
+        var provCRUD = new ProviderCRUD();
+        provCRUD.InserADO(MyProvider);
+    }
+
+    public static void ExamEx4()
+    {
+        var pCRUD = new ProductCRUD();
+        List<Product> products = pCRUD.SelectBySalesSurnameADO("REYES");
+
+        foreach (var p in products)
+        {
+            Console.WriteLine($"Code: {p.Code}, Price: {p.Price}");
+        }
+    }
+
+    public static void ExamEx5()
+    {
+        var oCRUD = new OrderCRUD();
+        var orders = oCRUD.SelectAllHQL();
+
+        foreach (var o in orders)
+        {
+            Console.WriteLine($"Id: {o.Id}, Product: {o.Product.Description}, Client: {o.Client.Name}, Date: {o.OrderDate}, Amount: {o.Amount}, Deliveri: {o.DeliveryDate}, Cost: {o.Cost}");
+        }
+    }
+
+    public static void ExamEx6()
+    {
+        var oCRUD = new OrderCRUD();
+        var order = oCRUD.SelectLowAmount();
+
+        Console.WriteLine($"Ordre\nId: {order.Id}, Amount: {order.Amount}, Cost: {order.Cost}\nProducte:\nCode: {order.Product.Code}, Price: {order.Product.Price}");
+    }
+    public static void ExamEx8()
+    {
+        var cCRUD = new ClientCRUD();
+        var clients = cCRUD.SelectByCreditLowerThan(30000);
+
+        foreach (var c in clients)
+        {
+            Console.WriteLine($"Code: {c[0]}, Name: {c[1]}, Credit:{c[2]}");
         }
     }
 }
